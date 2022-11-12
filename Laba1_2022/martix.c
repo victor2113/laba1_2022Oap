@@ -6,9 +6,26 @@
 #define WRONGSIZE "\nImposible matrix size value\n"
 
 
+
 Mat Zero = {-1 , -1 , NULL};
 
-Mat create_mat(Mat mat) {
+Mat create_filled_mat(int w, int h, int value) {
+    Mat mat ={w, h, NULL};
+
+    if(mat.w <= 0 || mat.h <= 0){
+        printf(WRONGSIZE);
+        return Zero;
+    }
+    mat.t = malloc(sizeof(*mat.t) * mat.w);
+    for (int i = 0; i < mat.w; ++i)
+        mat.t[i] = malloc(sizeof(**mat.t) * mat.h);
+    for (int i = 0; i < mat.w; ++i)
+        for (int j = 0; j < mat.h; ++j)
+            mat.t[i][j] = value;
+    return mat;
+}//done
+
+Mat create_empty_mat(Mat mat) {
     if(mat.w <= 0 || mat.h <= 0){
         printf(WRONGSIZE);
         return Zero;
@@ -55,7 +72,7 @@ Mat mat_sum(Mat mat1, Mat mat2) { //добавить проверки
     }
 
     Mat result = {mat1.w, mat1.h, NULL};
-    result = create_mat(result);
+    result = create_empty_mat(result);
     //if(result.w != mat1.w != mat2.w)
     //return result;
     for (int i = 0; i < result.w; ++i)
@@ -74,7 +91,7 @@ Mat mat_subtraction(Mat mat1, Mat mat2) {
         return Zero;
     }
     Mat result = {mat1.w, mat1.h, NULL};
-    result = create_mat(result);
+    result = create_empty_mat(result);
     //if(result.w != mat1.w != mat2.w)
     //return result;
     for (int i = 0; i < result.w; ++i)
@@ -83,13 +100,13 @@ Mat mat_subtraction(Mat mat1, Mat mat2) {
     return result;
 }//done?
 
-void fill_mat(Mat mat)  {
+void fill_mat(Mat mat , int range)  {
     if(mat.w <= 0 || mat.h <= 0){
         printf("\nTrying to fill empty matrix\n");
     }
     for (int i = 0; i < mat.w; ++i)
         for (int j = 0; j < mat.h; ++j)
-            mat.t[i][j] = rand() % 10;
+            mat.t[i][j] = rand() % range;
 }//done?
 
 Mat mat_multiplication(Mat mat1, Mat mat2) {
@@ -102,7 +119,7 @@ Mat mat_multiplication(Mat mat1, Mat mat2) {
         return Zero;
     }
     Mat result = {mat1.w, mat2.h, NULL};
-    result = create_mat(result);
+    result = create_empty_mat(result);
     //if(result.w != mat1.w != mat2.w)
     //return result;
     for (int i = 0; i < result.w; ++i)
@@ -122,7 +139,7 @@ Mat mat_tran(Mat mat) {
         return Zero;
     }
     Mat result = {mat.h, mat.w, NULL};
-    result = create_mat(result);
+    result = create_empty_mat(result);
     //if(result.w != mat1.w != mat2.w)
     //return result;
     for (int i = 0; i < result.w; ++i)
@@ -138,7 +155,7 @@ Mat copy_mat(Mat mat){
     }
 
     Mat result = {mat.w, mat.h, NULL};
-    result = create_mat(result);
+    result = create_empty_mat(result);
     for (int i = 0; i < result.w; ++i)
         for (int j = 0; j < result.h; ++j)
             result.t[i][j] = mat.t[i][j];

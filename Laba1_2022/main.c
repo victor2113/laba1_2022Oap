@@ -2,18 +2,19 @@
 #include "martix.h"
 
 int main() {
-    Mat mat1 = {4, 2, NULL};
-    Mat mat2 = {2, 4, NULL};
+    Mat mat1;
+    Mat mat2;
     Mat mat3;
+    int range = 10;
     //Функция создания матрицы с выделением памяти
 
-    mat1 = create_mat(mat1);
-    mat2 = create_mat(mat2);
+    mat1 = create_filled_mat(1 , 3, 2);
+    mat2 =  create_filled_mat(3 , 1, 0);
 
     //Заполнение матрицы рандомом в заданном диапазоне
 
-    fill_mat(mat1);
-    fill_mat(mat2);
+    //fill_mat(mat1 , range);
+    fill_mat(mat2 , range);
 
     print_mat(mat1);
     print_mat(mat2);
@@ -46,8 +47,8 @@ int main() {
       с NULL по массиву данных и -1 по размерам.
     */
 
-    Mat mat4 = {0 , 0 , NULL};
-    fill_mat(mat4);
+    Mat mat4 = create_filled_mat(0 , 0 , 100);
+    fill_mat(mat4 , range);
     mat4 = mat_tran(mat4);
     print_mat(mat4);
 
@@ -56,6 +57,3 @@ int main() {
 
     return 0;
 }
-
-
-
